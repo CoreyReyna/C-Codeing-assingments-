@@ -1,0 +1,76 @@
+/*
+ Author: Corey Reyna (coreyreyna@my.unt.edu)
+ CSCE 1030.001
+ Date: 09/17/2020 -
+ Instructor: Dr.Shrestha
+ Description:
+ This program prompts the user to input the radius(in miles) and the mass(in kg) of a planet to find
+ the velovity necessary to escape the planet. The program then prompts the user for the mass of an
+ an object attempting to leave the planet to find the kinetic energy required to escape the planet..
+
+*/
+
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+
+
+
+int main()
+{
+
+	const double GRAVITY_CONST = 6.67e-11;
+	const double MTOMMULTI = 1609.34;		// Miles to meters multiplier
+
+
+
+
+	cout << "+------------------------------------------------------+\n";
+	cout << "|						       |\n";
+	cout << "|	Computer Science and Engineering	       |\n";
+	cout << "|	CSCE 1030 - Computer SCience I 		       |\n";
+	cout << "|	Corey Reyna car0428 coreyreyna@my.unt.edu      |\n";
+	cout << "|						       |\n";
+	cout << "+------------------------------------------------------+\n\n\n";
+
+
+	double pRadius; 	// Planet Radius in miles
+	double pMass; 		// Planet Mass in kg
+	double pVelocity; 	// Escape Velocity m / sec
+	double escapeKEnergy; 	// Kinetic energy required to escape planet in Joules
+	int oMass; 		// Object mass in kg
+
+
+
+	cout << "Enter the radius of the planet in miles\n";
+	cin >> pRadius;
+
+	cout << "Enter the mass of the planet in kg\n";
+	cin >> pMass;
+
+
+
+		pRadius *= MTOMMULTI;	//Converts the radius from miles to meters for calculations
+		pVelocity = sqrt((2 * GRAVITY_CONST * pMass) / pRadius);
+
+	printf("The escape velocity of the planet is %.3lf meters per second.\n",pVelocity);
+
+					//I use the the printf function becasue it allows me to decide the
+					//number of decimal places
+
+
+	cout << "Enter the mass of an object attempting to escape the gravity of the planet in kg\n";
+	cin >> oMass;
+
+
+		escapeKEnergy = .5 * oMass * (pVelocity * pVelocity);
+
+
+	printf("The kinetic energy required by the object to escape the planet is %.4lf Joules.\n",escapeKEnergy);
+
+
+return 0;
+}
