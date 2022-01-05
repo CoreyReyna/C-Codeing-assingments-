@@ -1,0 +1,94 @@
+/* Author: Corey Reyna (coreyreyna@my.unt.edu)
+ Date: 07/13/2021
+ Instructor: Pradhumna Shrestha / Arif Ahmed
+ Description: This program creates a 2D dynamic array
+ for students and their test scores. The number of students
+ and number of tests are recieved by the user. the program 
+ allocates the proper amount of memeory and then displays the 
+ averages for each student.
+*/
+
+/*
+ Function:      getGrades
+ Parameters:    a pointer to a 2D array for students and test scores
+                a pointer to a 1Dmatrix that stores student averages  
+                an int for the number of students 
+ Return:        void
+ Description:   processes test scores for students and finds their averages 
+                 
+*/
+
+/*
+ Function:      dispAverages
+ Parameters:    a pointer to an average array
+ Return:        void
+ Description:   displays the averages in the array  
+                 
+*/
+
+#include <iostream>
+using namespace std;
+
+void getGrades(int **student_TestArray, float *averageArray, int numStudents)
+{
+
+    for(int i = 0;i<numStudents;++i)
+    {    
+        int COLS = 0;       //number of tests a student has taken
+        float totalScore = 0;
+        cout<<"Enter the number of tests student "<<i+1<<" has taken: ";    //Prompt user for the tests this student has taken
+        cin>>COLS;        
+        student_TestArray[i]=new int[COLS];
+        cout<<"Enter the test scores for student "<<i+1<<": ";
+
+        for(int j = 0;j<COLS;++j)
+        {
+            cin>>student_TestArray[i][j];
+            totalScore += student_TestArray[i][j];
+
+        }
+        averageArray[i] = (totalScore/COLS);
+
+
+    }      
+
+
+    
+}
+
+void dispAverage(float *averageArray, int numStudents)
+{
+    cout<<"The average test scores for student each student are shown below: \n";
+
+    for(int i =0;i<numStudents;++i)
+    {
+        cout<<"Student "<<i+1<<": "<<averageArray[i]<<endl;
+    }
+}
+
+int main()
+{
+    int numStudents;        //number of students 
+    int **stdTestArr;       //2D array for students and their scores
+    float *avg;            //stores avgerages for each student
+
+    
+    cout<<"Enter the number of students: ";
+    cin>>numStudents;
+
+    stdTestArr = new int*[numStudents];
+
+    avg = new float[numStudents];
+
+    getGrades(stdTestArr, avg, numStudents);
+    dispAverage(avg, numStudents);
+
+    for(int i=0;i<numStudents;++i)
+    {
+        delete[] stdTestArr[i];
+    }
+    delete[] stdTestArr;
+
+
+    return 0;
+}
