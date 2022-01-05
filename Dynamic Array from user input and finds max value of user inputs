@@ -1,0 +1,59 @@
+/* Author: Corey Reyna (coreyreyna@my.unt.edu)
+ Date: 07/13/2021
+ Instructor: Pradhumna Shrestha / Arif Ahmed
+ Description: This program creates a dynamic array whose 
+ size is deteremined by the user. The program then allocates 
+ the proper amount of memory to the array and reads in 
+ values from the user. The program calls a function to find the 
+ largest value entered and displays it. The program 
+ then deletes the created array.
+*/
+
+/*
+ Function:      MaxValue
+ Parameters:    a pointer to an array of int and
+                an int size used in for loops 
+ Return:        int
+ Description:   Finds the largest int in array and returns it 
+                 
+*/
+
+#include <iostream>
+using namespace std;
+
+int MaxValue(int *arr, int size)
+{
+    int maxValue = *arr;
+    for(int i=0;i<size;++i)         // the *(arr+i) points to the first location
+    {                               //in the array + i
+        maxValue = (maxValue < *(arr+i)) ? maxValue=*(arr+i) : maxValue;
+    }   
+    return maxValue;
+}
+
+int main()
+{
+
+    int SIZE;
+    int max;
+    
+
+    cout<<"Enter the size of your array.\n ";
+    cin>>SIZE;
+
+    int *numList = new int[SIZE];               // the numList variable points to the first 
+    cout<<"Enter your numbers: ";               //location in the array 
+    for(int i = 0;i<SIZE;++i)
+    {
+        cin>>numList[i];
+    }
+
+    max = MaxValue(numList,SIZE);
+    cout<<"The largest value you listed was "<<max<<endl;
+
+
+    delete [] numList;
+
+
+    return 0;
+}
