@@ -1,0 +1,192 @@
+
+/*
+ Author: Corey Reyna (coreyreyna@my.unt.edu)
+ CSCE 1030.001
+ Date: 09/17/2020 
+ Instructor: Dr.Shrestha
+ Description: This program displays a personal concierge app that offers a greeting, a randomly generated forecast, and a guessing game 
+
+*/
+
+
+#include <iostream>
+#include <string>
+#include <time.h>
+#include <sstream>
+#include <stdlib.h>
+#include <stdio.h>
+
+using namespace std;
+
+
+
+
+int main()
+{
+
+
+	string name;
+	enum menu {GREETING=1, WEATHER=2, GAME=3, EXIT=4};
+	int choice;
+	int temp;
+	int skies;
+	int gameNum;
+	int guess;
+	int hr;
+	int min;
+	int sec;
+	int cnt;
+	bool stop = false;
+	string time_str, stringday, stringmonth, stringdate, stringhr, stringmin, stringsec;
+
+
+	time_t rawtime;				//This finds and displays the system date and time
+	rawtime = time(&rawtime);
+	time_str = ctime(&rawtime);
+	stringstream ss(time_str);
+
+	srand(time(NULL));			// This connects the random seed to the computers
+						// internal time to randomize
+
+
+ 	cout << "+-----------------------------------------------------+\n";
+        cout << "|                                                     |\n";
+        cout << "|      Computer Science and Engineering               |\n";
+        cout << "|      CSCE 1030 - Computer SCience I                 |\n";
+        cout << "|      Corey Reyna car0428 coreyreyna@my.unt.edu      |\n";
+        cout << "|                                                     |\n";
+        cout << "+-----------------------------------------------------+\n\n\n";
+
+
+
+	cout << "Enter your full name.\n";
+	getline(cin, name);			// getline retrieves te full name
+
+	cout << "Thank you " << name << ".\n";
+
+
+
+	while(!stop)
+	{
+	cout << "+************************** M E N U ***********************************+ \n";
+        cout << "|                                                                      | \n";
+        cout << "|      This is your Personal Concierge App: Choose a Service:          | \n";
+        cout << "|      1. Display Personal Greeting                                    | \n";
+        cout << "|      2. Display Today’s Weather Forecast                             | \n";
+        cout << "|      3. Play a Guessing Game                                         | \n";
+        cout << "|      4. Exit                                                         | \n";
+        cout << "|                                                                      | \n";
+        cout << "+**********************************************************************+ \n\n\n";
+
+	cout << "---->";
+        cin >> choice;
+
+        choice = static_cast<menu>(choice);	// Translates the user choice to the menu options
+
+		switch(choice){
+
+			case GREETING:
+
+				cout << time_str;
+
+
+				getline(ss,stringday,' '); // This is storing each piece
+				getline(ss,stringmonth,' '); // of information according
+				getline(ss,stringdate,' '); // to the order it shows up
+				getline(ss,stringhr,':'); // in the string.
+				getline(ss,stringmin,':');
+				getline(ss,stringsec,' ');
+
+				cout << string(100, '\n'); // This is to clear the printed time
+							   //so the user deson't see how the time
+							   //was parsed
+				hr = stoi(stringhr);
+				min = stoi(stringmin); //This turns the string into an integer
+				sec = stoi(stringsec);
+// The next portion decides the 
+/* greeting based on the time of day*/	if(hr < 12 && min < 60 && sec < 60)
+					{
+						cout << "Good morning " << name << "." <<  endl << "Today is " << time_str << endl;
+						cout << "Have a great!\n\n\n";
+
+					}else if(hr>=12 && hr<6 && min<60 && sec < 60)
+					{
+						cout << "Good afternoon " << name << "."  << endl << "Today is " << time_str << endl;
+						cout << "Have a great!\n\n\n";
+
+					}else
+					{
+						cout << "Good evening " << name << "." << endl << "Today is " << time_str << endl;
+						cout << "Have a great!\n\n\n";
+					}
+
+				break;
+
+				case WEATHER:
+					temp = rand()%95 + 10; //generating random # 10-105
+					skies = rand()%2 + 1;	//generating random # 1-2
+
+					cout << "It is " << temp << " degrees Fahrenheit and ";
+
+
+					if(skies == 1)
+					{
+						cout << "rainy.\n\n\n";
+					}
+					else
+					{
+						cout << "sunny.\n\n\n";
+					}
+				break;
+
+				case GAME:
+
+					gameNum = rand()% 10 + 1;
+					cnt = 0;
+					cout << "You have 3 chances to guess a special number from 1 to 10:\n";
+/* the game will end when 3 guess*/		while ((cnt < 3) && (guess != gameNum))
+/* are made or the number is guessed*/		{
+
+							cout << "You have " << (3 - cnt) << " guesses left.  ";
+							cin >> guess;
+								if (gameNum == guess)
+								{
+									cout << "Correct! It only took you  " << cnt + 1 << " guesses!\n\n";
+								}
+								else if (guess < gameNum)
+								{
+									cout << "Your guess is too low!\n\n";
+								}
+								else
+								{
+									cout << "Your guess is too high!\n\n";
+								}
+								cnt++;
+								}
+						if (cnt == 3)
+						{
+							cout << "The special number was " << gameNum << "!\n\n\n";
+						}
+
+				continue;
+
+				case EXIT:
+
+					cout << "\n\nThanks for using the Personal Concierge App\n";
+
+					stop = true;	// This is changing the bool variable
+							// controling the while loopto make it stop
+				break;
+
+				default:
+
+					cout << "Choose a valid menu option.\n";
+				}
+
+
+
+	} 		//closing while loop
+
+
+return 0;
+}
