@@ -1,0 +1,71 @@
+/* Author: Corey Reyna (coreyreyna@my.unt.edu)
+ Date: 07/08/2021
+ Instructor: Pradhumna Shrestha / Arif Ahmed
+ Description: This program reads a predetermined file for data.
+ The file is read in groups of 3. The program can store up to 
+ 10 different structs of data and will find the maximum value 
+ per row.
+*/
+
+#include <iostream>
+#include <fstream>          // inout output file streams
+#include <string>           //string functions
+using namespace std;
+
+struct RowMax       // an array of doubles and the maximum of that array
+{
+    double numArr[3];
+    double max;
+};
+
+int main()
+{
+    cout<<"The program is running.\n";
+    ifstream in_s;
+    RowMax rows[10];
+    string fileName = "data.dat";
+    int rowCnt = 0;
+
+    in_s.open(fileName);
+    cout<<"The program opened my file.\n";
+    if(in_s.fail())
+    {
+        cout<<"The file "<<fileName<<" failed to open.\n";
+        exit(EXIT_FAILURE);
+    }
+
+    
+
+    while(!in_s.eof())
+    {
+        int index =0;
+        while(index<3)
+        {
+           in_s>>rows[rowCnt].numArr[index];
+           ++index; 
+        }
+        ++rowCnt;
+        index = 0;
+
+    }
+    rowCnt -= 1;
+    in_s.close();
+
+    for(int i =0;i<rowCnt;++i)
+    {
+        for(int j=0;j<3;++j)
+        {
+            rows[i].max = (rows[i].max < rows[i].numArr[j]) ? rows[i].numArr[j] : rows[i].max;
+
+        }
+    }
+    
+
+    for(int i =0;i<rowCnt;++i)
+    {
+        cout<<"The largest number in row "<<i+1<<" is "<<rows[i].max<<endl;
+    }
+
+
+    return 0;
+}
