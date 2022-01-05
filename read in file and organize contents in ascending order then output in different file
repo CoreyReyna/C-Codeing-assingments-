@@ -1,0 +1,89 @@
+/* Author: Corey Reyna (coreyreyna@my.unt.edu)
+ Date: 07/06/2021
+ Instructor: Pradhumna Shrestha / Arif Ahmed
+ Description: This program prompts the user for a file to read information
+ from and one to read information to. The program then reads the information 
+ from the input file to the terminal and copies the information into 
+ the output file of their choice in ascending order.
+*/
+
+
+/*
+ Function:      sortArray
+ Parameters:    a float array to hold numbers and
+                a int size for the loop 
+ Return:        void
+ Description:   This function accepts an array of floats to be sorted in 
+                ascending order 
+*/
+
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+void sortArr(float array[], int size);
+
+int main()
+{
+    float numArray[25];     // store numbers from input file 
+    ifstream in_s;
+    ofstream out_s;
+    string inFile = "unsorted.dat";
+    string outFile = "sorted.dat";
+    int numCnt = 0;
+
+    in_s.open(inFile);
+    if(in_s.fail())
+    {
+        cout<<"Unable to open "<<inFile<<" file.\n";
+        exit(EXIT_FAILURE);
+    }
+
+    while(!in_s.eof())
+    {
+        in_s>>numArray[numCnt];
+        ++numCnt;               // to figure out the total amount of numbers in file
+    }
+
+    in_s.close();
+
+    //cout<<numCnt<<endl;       // see if number count is working properly
+
+    sortArr(numArray, numCnt);
+
+    out_s.open(outFile);
+    if(out_s.fail())
+    {
+        cout<<"Unable to open "<<outFile<<" file.\n";
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i = 0; i<numCnt; ++i)
+    {
+        out_s<<numArray[i]<<endl;
+    }
+
+    out_s.close();
+    
+    return 0;
+}
+
+void sortArr(float array[], int size)    //in ascending order
+{
+    for(int index=0;index<size;++index)
+    {
+        for (int i=index+1;i<size;++i)
+        {
+            if (array[index] > array[i])
+            {
+                int temp = array[index];
+                array[index] = array[i];
+                array[i] = temp;
+                //cout<<arr[index]<<endl;
+            }
+        } 
+    
+    }
+}
