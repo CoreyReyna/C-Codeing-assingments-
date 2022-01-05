@@ -1,0 +1,79 @@
+/* Author: Corey Reyna (coreyreyna@my.unt.edu)
+ Date: 10/21/2020
+ Instructor: Sarah Beaver
+ Description: This program compares two seperate arrays, one being grocery prices and the other
+ being a bool array of the same length. For every spot in the bool array that is true the corresponding
+ spot in the prices array will be increased by 10%. this is done through two seperate functions
+ print_prices and update, responsible for raising prices accordingly.
+*/
+
+
+
+#include <iostream>
+using namespace std;
+
+const int SIZE = 6;
+
+void print_prices(const float prices[], int size); // void causes the function return nothing
+void update(float prices[], const bool raise_price[], int SIZE);
+
+/*
+Arrays automatically reference each other. This means that no matter where the array is being changed
+at, it will be "saved" throughout the code. To stop the array from being manipulated we use the
+const type before the array, like in the rpdate prototype function.
+*/
+
+int main()
+{
+	bool raise_price[SIZE];
+	float prices[SIZE] = {4.25, 0.99, 3.29, 1.00, 2.19, 6.59};
+
+	cout.setf(ios::fixed);
+	cout.setf(ios::showpoint);
+	cout.precision(2);
+
+	cout << "Orignial: ";
+
+	print_prices(prices, SIZE);
+
+	srand(time(NULL));
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		raise_price[i] = rand() % 2;
+	}
+
+	update(prices, raise_price, SIZE);
+
+	cout << "Updated : ";
+
+	print_prices(prices, SIZE);
+
+	return 0;
+}
+
+void print_prices(const float prices[], int SIZE)
+{
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		cout << "$" << prices[i] << " ";
+	}
+
+	cout << endl;
+	return;
+}
+
+
+void update(float prices[], const bool raise_price[], int SIZE)
+{
+
+	for ( int j = 0; j < SIZE; j++)
+	{
+		if(raise_price[j] == 1)
+		{
+			prices[j]+= prices[j]*(0.1);
+		}
+	}
+	return;
+}
